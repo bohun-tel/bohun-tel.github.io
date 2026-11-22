@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>보훈 전화번호</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="보훈 전화번호">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#1f4e79">
+<link rel="apple-touch-icon" href="icon-180.png">
+<link rel="icon" type="image/png" href="icon-192.png">
+<link rel="manifest" href="manifest.webmanifest">
+<style>
+  :root{
+    --bg:#f2f5f9; --card:#fff; --text:#1b2430; --sub:#5b6776; --line:#e3e8ef;
+    --brand:#1f4e79; --call:#17a34a; --callbg:#e8f7ee; --mark:#ffe36e;
+  }
+  @media (prefers-color-scheme: dark){
+    :root{ --bg:#10151c; --card:#1a222c; --text:#e8edf3; --sub:#97a3b2; --line:#2a3542;
+      --brand:#7fb2e5; --call:#4ade80; --callbg:#16301f; --mark:#8a6d00; }
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;background:var(--bg);color:var(--text);
+    font-family:-apple-system,BlinkMacSystemFont,"Apple SD Gothic Neo","Noto Sans KR","Malgun Gothic",sans-serif}
+  header{position:sticky;top:0;z-index:10;background:#1f4e79;color:#fff;
+    padding:calc(env(safe-area-inset-top) + 10px) 12px 0}
+  header h1{margin:0 0 8px;font-size:17px;font-weight:700}
+  .sbox{position:relative}
+  #q{width:100%;height:46px;border:0;border-radius:12px;padding:0 44px 0 14px;font-size:17px;
+    background:#fff;color:#1b2430;outline:none}
+  #clr{position:absolute;right:4px;top:3px;width:40px;height:40px;border:0;background:none;
+    font-size:20px;color:#7a8696;display:none}
+  #info{font-size:12px;opacity:.9;margin-top:6px;min-height:16px}
+  .legend{font-size:11px;opacity:.9;margin-top:2px}
+  .tabs{display:flex;margin:8px -12px 0}
+  .tab{flex:1;height:44px;border:0;background:rgba(255,255,255,.12);color:#fff;font-size:15px;font-weight:700;
+    border-bottom:3px solid transparent;cursor:pointer}
+  .tab.on{background:rgba(255,255,255,.28);border-bottom-color:#ffd54a}
+  main{padding:10px 10px 40px;max-width:720px;margin:0 auto}
+  .grp{margin:16px 4px 6px;font-size:13px;font-weight:700;color:var(--brand)}
+  .card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 52px 10px 12px;margin-bottom:8px}
+  .path{font-size:12px;color:var(--sub);margin-bottom:2px;word-break:keep-all}
+  .title{font-size:16px;font-weight:600;line-height:1.35;word-break:keep-all}
+  .person{font-weight:500;color:var(--sub);margin-left:6px;font-size:14px}
+  .note{font-size:12px;color:var(--sub);margin-top:2px}
+  .phones{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+  .pair{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  a.call{display:flex;flex-direction:column;justify-content:center;min-width:128px;min-height:48px;
+    padding:6px 14px;border-radius:10px;background:var(--callbg);color:var(--call);
+    text-decoration:none;border:1px solid var(--call)}
+  a.call:active{filter:brightness(.92)}
+  a.call .ext{font-size:19px;font-weight:700;letter-spacing:.3px}
+  a.call::before{content:"📞 ";font-size:13px}
+  .bd{display:inline-block;font-size:11px;font-weight:700;border-radius:6px;padding:1px 6px;margin-bottom:2px;align-self:flex-start}
+  a.call .bd{background:var(--call);color:#fff}
+  .int{display:flex;flex-direction:column;justify-content:center;min-width:100px;min-height:48px;padding:6px 14px;
+    border-radius:10px;border:1px dashed var(--sub);color:var(--text)}
+  .int .bd{background:var(--sub);color:var(--card)}
+  .int .ext{font-size:19px;font-weight:700;letter-spacing:.3px}
+  .ref{font-size:14px;color:var(--sub);border:1px dashed var(--sub);border-radius:8px;padding:4px 8px;white-space:nowrap}
+  .gen{display:flex;flex-direction:column;justify-content:center;min-width:150px;min-height:48px;padding:6px 14px;border-radius:10px;border:1px dashed var(--sub);color:var(--text)}
+  .gen .bd{background:var(--sub);color:var(--card)}
+  .gen .ext{font-size:19px;font-weight:700;letter-spacing:.3px}
+  .fax{font-size:11px;font-weight:700;color:#b45309;margin-left:6px}
+  .star{position:absolute;right:4px;top:4px;width:44px;height:44px;border:0;background:none;font-size:28px;line-height:44px;
+    color:var(--sub);cursor:pointer;padding:0}
+  .star.on{color:#f5b301}
+  mark{background:var(--mark);color:inherit;border-radius:3px;padding:0 1px}
+  .empty{text-align:center;color:var(--sub);padding:50px 10px;font-size:15px;line-height:1.6}
+  footer{text-align:center;color:var(--sub);font-size:12px;padding:6px 0 calc(env(safe-area-inset-bottom) + 30px)}
+</style>
+</head>
+<body>
+<header>
+  <h1 id="ttl">보훈 전화번호</h1>
+  <div class="sbox">
+    <input id="q" type="search" inputmode="search" autocomplete="off" autocapitalize="off"
+           spellcheck="false" placeholder="부서·이름·번호 검색 (초성도 가능: ㅅㅈㅂ)">
+    <button id="clr" aria-label="지우기">✕</button>
+  </div>
+  <div id="info"></div>
+  <div class="legend">초록 일반전화(051-601+내선)를 터치하면 통화 연결 · 오른쪽 ☆로 즐겨찾기</div>
+  <div class="tabs">
+    <button class="tab on" id="tabAll" data-t="all">전화번호</button>
+    <button class="tab" id="tabFav" data-t="fav">★ 즐겨찾기</button>
+  </div>
+</header>
+<main id="list"><div class="empty">불러오는 중…</div></main>
+<footer id="foot"></footer>
+
+<script>
+/* 데이터 주소 (구글 앱스크립트 JSON) */
+var API = 'https://script.google.com/macros/s/AKfycbxzx4B6z6yZfextwERX9SZJKOyR4Q04Z8b7NrGDkBkGJOC3HcfOnJjMASbHGnreKoJKiA/exec?data=1';
+
+var DATA = null, ROWS = [], TAB = 'all', LAST = '';
+var CHO = 'ㄱㄲㄴㄷㄸㄹㅁㅂㅃㅅㅆㅇㅈㅉㅊㅋㅌㅍㅎ';
+var MAX_SHOW = 300;
+
+function cho(s){
+  var o = '';
+  for (var i = 0; i < s.length; i++){
+    var c = s.charCodeAt(i) - 0xAC00;
+    o += (c >= 0 && c <= 11171) ? CHO.charAt(Math.floor(c / 588)) : s.charAt(i);
+  }
+  return o;
+}
+function esc(s){
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function isJamo(t){ return /^[ㄱ-ㅎ]+$/.test(t); }
+
+/* ---------- 전화번호 해석 ---------- */
+function digits(s){ return String(s).replace(/\D/g,''); }
+function fmt(d){
+  if (d.length === 10) return d.replace(/^(\d{3})(\d{3})(\d{4})$/, '$1-$2-$3');
+  if (d.length === 11) return d.replace(/^(\d{3})(\d{4})(\d{4})$/, '$1-$2-$3');
+  if (d.length === 9)  return d.replace(/^(\d{2})(\d{3})(\d{4})$/, '$1-$2-$3');
+  return d;
+}
+function parsePhones(raw){
+  var out = [];
+  var s = String(raw || '').replace(/\(.*?\)/g,'');
+  s = s.replace(/(\d{3,})\s*~\s*(\d{1,})/g, function(m, a, b){
+    var end = a.slice(0, a.length - b.length) + b, res = [];
+    for (var n = parseInt(a,10); n <= parseInt(end,10) && res.length < 12; n++) res.push(String(n));
+    return res.join('/');
+  });
+  var pre = digits(DATA.prefix), area = digits(DATA.area);
+  s.split(/[\/,;\s]+/).forEach(function(t){
+    if (!t) return;
+    var d = digits(t);
+    if (!d) return;
+    if (/^\d{4}$/.test(d))               out.push({type:'ext', show:d, full:pre + d});
+    else if (/^0\d{8,10}$/.test(d))      out.push({type:'gen', show:fmt(d), full:d});
+    else if (/^\d{7,8}$/.test(d))        out.push({type:'gen', show:fmt(area + d), full:area + d});
+  });
+  return out;
+}
+
+/* ---------- 검색 ---------- */
+function strip(s){ return String(s).replace(/\s+/g,''); }
+function prep(rows){
+  return rows.map(function(r, i){
+    var hay = strip(r.join(' ').toLowerCase());
+    var re = /별관(\d)/g, m, add = '';
+    while ((m = re.exec(hay))) add += '별' + m[1];
+    hay += add;
+    var gp = parsePhones(r[4]).map(function(p){ return p.full || ''; }).join(' ');
+    return {i:i, r:r, key:keyOf(r), hay:hay, hayCho:cho(hay), pd:digits(r[4]) + ' ' + gp};
+  });
+}
+function termsOf(q){ return q.toLowerCase().split(/\s+/).filter(Boolean); }
+function matches(o, terms){
+  for (var k = 0; k < terms.length; k++){
+    var t = terms[k], ok;
+    if (isJamo(t)) ok = o.hayCho.indexOf(t) >= 0;
+    else {
+      ok = o.hay.indexOf(t) >= 0;
+      if (!ok && /^[\d-]+$/.test(t)){ var dt = digits(t); ok = dt.length > 0 && o.pd.indexOf(dt) >= 0; }
+    }
+    if (!ok) return false;
+  }
+  return true;
+}
+function hl(text, terms){
+  text = String(text);
+  if (!terms.length || !text) return esc(text);
+  var map = [], st = '';
+  for (var i = 0; i < text.length; i++){
+    if (!/\s/.test(text.charAt(i))){ map.push(i); st += text.charAt(i).toLowerCase(); }
+  }
+  if (!st) return esc(text);
+  var sc = cho(st), rng = [];
+  terms.forEach(function(t){
+    var src = isJamo(t) ? sc : st, p = 0, idx;
+    while ((idx = src.indexOf(t, p)) >= 0){
+      rng.push([map[idx], map[idx + t.length - 1] + 1]);
+      p = idx + t.length;
+    }
+    var m = t.match(/^별관?(\d)$/);
+    if (m){
+      var re = new RegExp('별관\\s*' + m[1], 'g'), x;
+      while ((x = re.exec(text))) rng.push([x.index, x.index + x[0].length]);
+    }
+  });
+  if (!rng.length) return esc(text);
+  rng.sort(function(a,b){ return a[0]-b[0]; });
+  var merged = [rng[0]];
+  for (var j = 1; j < rng.length; j++){
+    var last = merged[merged.length-1];
+    if (rng[j][0] <= last[1]) last[1] = Math.max(last[1], rng[j][1]); else merged.push(rng[j]);
+  }
+  var html = '', pos = 0;
+  merged.forEach(function(m){
+    html += esc(text.slice(pos, m[0])) + '<mark>' + esc(text.slice(m[0], m[1])) + '</mark>';
+    pos = m[1];
+  });
+  return html + esc(text.slice(pos));
+}
+
+/* ---------- 즐겨찾기 (추가한 순서대로 아래에 쌓임, 이 기기에 저장) ---------- */
+var FAV = [];
+try { FAV = JSON.parse(localStorage.getItem('pb_fav') || '[]'); if (!Array.isArray(FAV)) FAV = []; } catch (e) { FAV = []; }
+function keyOf(r){ return [r[0], r[1], r[2], r[3], r[4]].join('|'); }
+function saveFav(){ try { localStorage.setItem('pb_fav', JSON.stringify(FAV)); } catch (e) {} }
+
+/* ---------- 렌더링 ---------- */
+function cardHtml(r, terms){
+  var key = keyOf(r), on = FAV.indexOf(key) >= 0;
+  var path = [r[0], r[1]].filter(Boolean).join(' › ');
+  var isFax = /fax|팩스/i.test(r[2]);
+  var title = r[2] || r[1] || r[0];
+  var h = '<div class="card"><button class="star' + (on ? ' on' : '') + '" data-k="' + esc(key) + '" aria-label="즐겨찾기">' + (on ? '★' : '☆') + '</button>';
+  if (path && r[2]) h += '<div class="path">' + hl(path, terms) + '</div>';
+  h += '<div class="title">' + hl(title, terms);
+  if (isFax) h += '<span class="fax">FAX</span>';
+  if (r[3]) h += '<span class="person">' + hl(r[3], terms) + '</span>';
+  h += '</div>';
+  if (r[5]) h += '<div class="note">' + hl(r[5], terms) + '</div>';
+  var ph = parsePhones(r[4]);
+  h += '<div class="phones">';
+  if (!ph.length){
+    h += '<span class="int"><span class="ext" style="font-size:15px">' + hl(r[4], terms) + '</span></span>';
+  } else {
+    ph.forEach(function(p){
+      if (p.type === 'ext'){
+        h += '<div class="pair">' +
+             (isFax ? '<span class="gen"><span class="bd">일반</span><span class="ext">' + hl(fmt(p.full), terms) + '</span></span>'
+                    : '<a class="call" href="tel:' + p.full + '"><span class="bd">일반</span><span class="ext">' + hl(fmt(p.full), terms) + '</span></a>') +
+             '<span class="ref">사내 ' + hl(p.show, terms) + '</span></div>';
+      } else if (isFax){
+        h += '<span class="int"><span class="bd">일반</span><span class="ext" style="font-size:16px">' + hl(p.show, terms) + '</span></span>';
+      } else {
+        h += '<a class="call" href="tel:' + p.full + '"><span class="bd">일반</span>' +
+             '<span class="ext" style="font-size:17px">' + hl(p.show, terms) + '</span></a>';
+      }
+    });
+  }
+  return h + '</div></div>';
+}
+
+function favRowsOf(){
+  var out = [];
+  FAV.forEach(function(k){
+    for (var z = 0; z < ROWS.length; z++){ if (ROWS[z].key === k){ out.push(ROWS[z]); break; } }
+  });
+  return out;
+}
+
+function render(){
+  var q = document.getElementById('q').value.trim();
+  var terms = termsOf(q);
+  var list = document.getElementById('list');
+  var info = document.getElementById('info');
+  document.getElementById('clr').style.display = q ? 'block' : 'none';
+  var favRows = favRowsOf();
+  document.getElementById('tabFav').textContent = '★ 즐겨찾기' + (favRows.length ? ' (' + favRows.length + ')' : '');
+  var html = '';
+  if (TAB === 'fav'){
+    var fr = terms.length ? favRows.filter(function(o){ return matches(o, terms); }) : favRows;
+    info.textContent = (terms.length ? '검색결과 ' : '즐겨찾기 ') + fr.length + '건';
+    if (!favRows.length) html = '<div class="empty">즐겨찾기한 번호가 없습니다.<br>[전화번호] 탭에서 카드 오른쪽 ☆를 눌러 추가하세요.</div>';
+    else if (!fr.length) html = '<div class="empty">검색 결과가 없습니다.</div>';
+    fr.forEach(function(o){ html += cardHtml(o.r, terms); });
+  } else if (!terms.length){
+    var cur = null;
+    ROWS.forEach(function(o){
+      var g = [o.r[0], o.r[1]].filter(Boolean).join(' › ') || '기타';
+      if (g !== cur){ html += '<div class="grp">' + esc(g) + '</div>'; cur = g; }
+      html += cardHtml(o.r, []);
+    });
+    info.textContent = '전체 ' + ROWS.length + '건';
+  } else {
+    var res = ROWS.filter(function(o){ return matches(o, terms); });
+    info.textContent = '검색결과 ' + res.length + '건' + (res.length > MAX_SHOW ? ' (상위 ' + MAX_SHOW + '건 표시)' : '');
+    if (!res.length) html = '<div class="empty">검색 결과가 없습니다.</div>';
+    res.slice(0, MAX_SHOW).forEach(function(o){ html += cardHtml(o.r, terms); });
+  }
+  list.innerHTML = html;
+}
+
+function init(d, fromCache){
+  DATA = d;
+  ROWS = prep(d.rows);
+  document.getElementById('foot').textContent = (d.asOf ? '기준일 ' + d.asOf + ' · ' : '') + '총 ' + d.rows.length + '건';
+  render();
+}
+
+/* 이벤트 */
+document.getElementById('q').addEventListener('input', render);
+document.getElementById('clr').addEventListener('click', function(){
+  var q = document.getElementById('q'); q.value = ''; render(); q.focus();
+});
+document.querySelector('.tabs').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.tab') : null;
+  if (!b) return;
+  TAB = b.getAttribute('data-t');
+  document.getElementById('tabAll').className = 'tab' + (TAB === 'all' ? ' on' : '');
+  document.getElementById('tabFav').className = 'tab' + (TAB === 'fav' ? ' on' : '');
+  window.scrollTo(0, 0);
+  render();
+});
+document.getElementById('list').addEventListener('click', function(e){
+  var b = e.target.closest ? e.target.closest('.star') : null;
+  if (!b) return;
+  var k = b.getAttribute('data-k'), i = FAV.indexOf(k);
+  if (i >= 0) FAV.splice(i, 1); else FAV.push(k);
+  saveFav();
+  var y = window.pageYOffset;
+  render();
+  window.scrollTo(0, y);
+});
+
+/* 캐시로 즉시 표시 → 백그라운드에서 최신 데이터 확인 후 달라졌을 때만 갱신 */
+var cached = null;
+try { cached = localStorage.getItem('pb_cache'); if (cached) { LAST = cached; init(JSON.parse(cached)); } } catch (e) { cached = null; }
+
+function refresh(){
+  fetch(API, {cache: 'no-store'})
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if (!d || !d.rows) throw new Error('데이터 형식 오류');
+      var s = JSON.stringify(d);
+      if (s === LAST) return;
+      LAST = s;
+      try { localStorage.setItem('pb_cache', s); } catch (e) {}
+      var y = window.pageYOffset;
+      init(d);
+      window.scrollTo(0, y);
+    })
+    .catch(function(err){
+      if (!DATA) document.getElementById('list').innerHTML =
+        '<div class="empty">데이터를 불러오지 못했습니다.<br>인터넷 연결을 확인한 뒤 다시 열어 주세요.</div>';
+    });
+}
+refresh();
+document.addEventListener('visibilitychange', function(){ if (!document.hidden) refresh(); });
+</script>
+</body>
+</html>
